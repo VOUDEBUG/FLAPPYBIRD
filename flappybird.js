@@ -31,6 +31,7 @@ const FlappyBird = {
     }
 }
 
+
 //floor creation on screen
 const Floor = {
     spriteX: 456, // where is located at X axle in sprites file.
