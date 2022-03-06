@@ -6,31 +6,51 @@ sprites.src = './sprites.png'; // associates Image to our sprite file with all t
 const canvas = document.querySelector('canvas'); // link to tag canavs from HTLM 
 const context = canvas.getContext('2d'); // define 2D reslution for our canvas tag
 
-//FlappyBird creation on screen
-const FlappyBird = {
-    spriteX: 248, // where is located at X axle in sprites file.
-    spriteY: 747, // where is located at Y axle in sprites file.
-    Width: 48,  
-    Height: 48, 
-    canvasX: 10, // destination (canvas) position
-    canvasY: 50, // destination (canvas) position
-    gravity: 0.25,    
-    fall: 0,
-    update(){
-        FlappyBird.fall = FlappyBird.fall + FlappyBird.gravity;
-        FlappyBird.canvasY = FlappyBird.canvasY + FlappyBird.fall;
-    },
-    draw(){
-        context.drawImage(
-            sprites, // Name of the file with the image
-            FlappyBird.spriteX, FlappyBird.spriteY,
-            FlappyBird.Width, FlappyBird.Height,
-            FlappyBird.canvasX, FlappyBird.canvasY,
-            FlappyBird.Width, FlappyBird.Height,  
-        );
+function colision(FlappyBird, Floor){
+    const FlappyBirdY = FlappyBird.canvasY + FlappyBird.Height;
+    const floorY = Floor.canvasY;
+    
+    if(FlappyBirdY >= floorY) {
+        return true;
     }
-}
-
+    return false;
+    }
+    
+    //FlappyBird creation on screen
+    const FlappyBird = {
+        spriteX: 248, // where is located at X axle in sprites file.
+        spriteY: 747, // where is located at Y axle in sprites file.
+        Width: 48,  
+        Height: 48, 
+        canvasX: 10, // destination (canvas) position
+        canvasY: 50, // destination (canvas) position
+        gravity: 0.25,    
+        fall: 0,
+        fly: 4.6,
+        jump(){
+            FlappyBird.fall = - FlappyBird.fly;
+        },
+        update(){
+            if(colision(FlappyBird, Floor)){
+                console.log('dead');
+                ChangeScreen(Screen.Start);
+                alert('Se fudeu cuzão, atualiza a pagina sua anta!')
+                return;
+            }
+    
+            FlappyBird.fall = FlappyBird.fall + FlappyBird.gravity;
+            FlappyBird.canvasY = FlappyBird.canvasY + FlappyBird.fall;
+        },
+        draw(){
+            context.drawImage(
+                sprites, // Name of the file with the image
+                FlappyBird.spriteX, FlappyBird.spriteY,
+                FlappyBird.Width, FlappyBird.Height,
+                FlappyBird.canvasX, FlappyBird.canvasY,
+                FlappyBird.Width, FlappyBird.Height,  
+            );
+        }
+    }
 
 //floor creation on screen
 const Floor = {
@@ -114,14 +134,14 @@ const Screen = {
         draw(){
             Background.draw();
             Floor.draw();  
-  //          FlappyBird.draw();  
+//            FlappyBird.draw();  
             GetReady.draw();
     },
         click(){
             ChangeScreen(Screen.Play);
     },
 
-        Update(){
+        update(){
 
         },
     },
@@ -132,7 +152,12 @@ const Screen = {
     Floor.draw();  
     FlappyBird.draw();   
         },
-        Update(){
+
+        click(){
+    FlappyBird.jump();
+        },
+
+        update(){
     FlappyBird.update();
         },
     }
@@ -141,7 +166,7 @@ const Screen = {
 
 function loop(){     
     ActiveScreen.draw();
-    ActiveScreen.Update();
+    ActiveScreen.update();
 
     requestAnimationFrame(loop); // function in JS to request the frame
 }
