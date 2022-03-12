@@ -32,7 +32,7 @@ function colision(FlappyBird, Floor){
             canvasY: 50, // destination (canvas) position
             gravity: 0.25,    
             fall: 0,
-            fly: 3.6,
+            fly: 3.2,
             jump(){
                 FlappyBird.fall = - FlappyBird.fly;
             },
