@@ -1,7 +1,7 @@
 console.log ('FlappyBird - Dev by Bruno - v1.0');
 
 const colisionSound = new Audio(); //Insert audio 
-colisionSound.src = './effects/hit.wav';
+colisionSound.src = './hit.wav';
 
 const sprites = new Image();
 sprites.src = './sprites.png'; // associates Image to our sprite file with all the icons
