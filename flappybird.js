@@ -157,7 +157,7 @@ function createTubes(){
         gap: 80,
         draw(){
             tubes.pairs.forEach(function(item){
-            const gapBetweenTubes = 190;
+            const gapBetweenTubes = 250;
             const Yrandom = item.y;
             const tubeTopX = item.x; // destination (canvas) position
             const tubeTopY = Yrandom; // destination (canvas) position
